@@ -1,3 +1,11 @@
+## Application Installation
+
+1) Clone repository.
+2) Run at console
+```
+bower install
+```
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)

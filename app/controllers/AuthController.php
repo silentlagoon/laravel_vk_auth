@@ -16,7 +16,7 @@ class AuthController extends BaseController
 {
     protected $layout = 'layouts.master';
 
-    public static function vksettings()
+    private static function getVksettings()
     {
         return array(
             'urlAuth' => 'http://oauth.vk.com/authorize',
@@ -31,7 +31,7 @@ class AuthController extends BaseController
     {
         if(Input::has('code'))
         {
-            $vkData = self::vksettings();
+            $vkData = self::getVksettings();
             $params = array(
                 'client_id' => $vkData['client_id'],
                 'client_secret' => $vkData['client_secret'],
@@ -120,7 +120,7 @@ class AuthController extends BaseController
             }
             else
             {
-                $vkData = self::vksettings();
+                $vkData = self::getVksettings();
                 $params = array(
                     'client_id'     => $vkData['client_id'],
                     'redirect_uri'  => $vkData['redirect_uri'],
