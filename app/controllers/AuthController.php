@@ -16,22 +16,29 @@ class AuthController extends BaseController
 {
     protected $layout = 'layouts.master';
 
+    public static function vksettings()
+    {
+        return array(
+            'urlAuth' => 'http://oauth.vk.com/authorize',
+            'urlToken' => 'https://oauth.vk.com/access_token',
+            'client_id' => '4764660',
+            'client_secret' => 'HJhd5Qzn2TUIwpGghyP7',
+            'redirect_uri' => 'http://laravel.local:8080/vkauth'
+        );
+    }
+
     public function vkauth()
     {
         if(Input::has('code'))
         {
-            $url = 'https://oauth.vk.com/access_token';
-            $client_id = '4764660';
-            $client_secret = 'HJhd5Qzn2TUIwpGghyP7';
-            $redirect_uri = 'http://laravel.local:8080/vkauth';
-
+            $vkData = self::vksettings();
             $params = array(
-                'client_id' => $client_id,
-                'client_secret' => $client_secret,
+                'client_id' => $vkData['client_id'],
+                'client_secret' => $vkData['client_secret'],
                 'code' => Input::get('code'),
-                'redirect_uri' => $redirect_uri,
+                'redirect_uri' => $vkData['redirect_uri'],
             );
-            $token = json_decode(file_get_contents($url . '?' . urldecode(http_build_query($params))), true);
+            $token = json_decode(file_get_contents($vkData['urlToken'] . '?' . urldecode(http_build_query($params))), true);
 
             if(isset($token['access_token']))
             {
@@ -41,6 +48,7 @@ class AuthController extends BaseController
                     'access_token' => $token['access_token']
                 );
                 $userInfo = json_decode(file_get_contents('https://api.vk.com/method/users.get' . '?' . urldecode(http_build_query($params))), true);
+
                 if (isset($userInfo['response'][0]['uid']))
                 {
                     $userInfo = $userInfo['response'][0];
@@ -112,7 +120,15 @@ class AuthController extends BaseController
             }
             else
             {
-                return View::make('auth.login');
+                $vkData = self::vksettings();
+                $params = array(
+                    'client_id'     => $vkData['client_id'],
+                    'redirect_uri'  => $vkData['redirect_uri'],
+                    'response_type' => 'code',
+                    'scope' => 'email'
+                );
+                $url = $vkData['urlAuth'] . '?' . urldecode(http_build_query($params));
+                return View::make('auth.login')->with('vk', $url);
             }
         }
 

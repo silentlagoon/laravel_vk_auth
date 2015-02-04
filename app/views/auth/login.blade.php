@@ -18,21 +18,9 @@
         {{ Form::close() }}
         <div class="text-center">
             {{ link_to('/register', 'Not yet registered?'); }}
-            <?php
-                        $url = 'http://oauth.vk.com/authorize';
-                        $client_id = '4764660';
-                        $client_secret = 'HJhd5Qzn2TUIwpGghyP7';
-                        $redirect_uri = 'http://laravel.local:8080/vkauth';
-
-                        $params = array(
-                            'client_id'     => $client_id,
-                            'redirect_uri'  => $redirect_uri,
-                            'response_type' => 'code',
-                            'scope' => 'email'
-                        );
-                        echo $link = '<p><a href="' . $url . '?' . urldecode(http_build_query($params)) . '">Login via ВКонтакте</a></p>';
-
-                        ?>
+        </div>
+        <div class="text-center">
+            {{ link_to($vk, 'Login via ВКонтакте') }}
         </div>
     </div>
 @stop
