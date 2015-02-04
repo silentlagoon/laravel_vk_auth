@@ -53,13 +53,13 @@ class AuthController extends BaseController
                 {
                     $userInfo = $userInfo['response'][0];
                     $validator = Validator::make(array('email' => $token['email']), array(
-                            'unique:users,email'
+                            'email' => 'unique:users'
                         )
                     );
                     if($validator->fails())
                     {
                         $user = User::where('email', $token['email'])->firstOrFail();
-                        if($user->vkid == $token['email']);
+                        if($user->vkid == $userInfo['uid']);
                         {
                             Auth::loginUsingId($user->id);
                             return Redirect::to('/profile');
