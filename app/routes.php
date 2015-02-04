@@ -21,7 +21,7 @@ Route::post('/login', array('uses' => 'AuthController@login'));
 
 
 //Logout
-Route::get('/logout', array('uses' => 'AuthController@logout'));
+Route::get('/logout', array('before' => 'auth', 'uses' => 'AuthController@logout'));
 
 
 //Register
