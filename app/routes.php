@@ -30,4 +30,4 @@ Route::post('/register', array('uses' => 'AuthController@register'));
 
 
 //Profile
-Route::get('/profile', array('before' => 'auth' ,'uses' => 'AuthController@profile'));
+Route::get('/profile', array('before' => 'auth' ,'uses' => 'ProfileController@showProfile'));
