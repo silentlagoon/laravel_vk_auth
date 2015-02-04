@@ -1,0 +1,23 @@
+.right{
+    float: right;
+}
+
+.word-break{
+    word-break: break-all;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.top10{
+    margin-top: 10px;
+}
+
+.top20 {
+    margin-top: 20px;
+}
+
+.top100{
+    margin-top: 100px;
+}
